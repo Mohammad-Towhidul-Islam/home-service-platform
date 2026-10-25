@@ -1,0 +1,69 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+enum PricingType {
+  STARTING
+  ESTIMATE
+  INSPECTION
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  phone        String   @unique
+  email        String?  @unique
+  passwordHash String
+  role         Role     @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ServiceCategory {
+  id        String    @id @default(cuid())
+  nameEn    String    @unique
+  nameBn    String
+  icon      String    @default("🛠️")
+  sortOrder Int       @default(0)
+  active    Boolean   @default(true)
+  services  Service[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Service {
+  id              String          @id @default(cuid())
+  categoryId      String
+  category        ServiceCategory @relation(fields: [categoryId], references: [id])
+  nameEn          String
+  nameBn          String
+  description     String
+  pricePaisa      Int
+  pricingType     PricingType
+  durationMinutes Int
+  active          Boolean         @default(true)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@index([categoryId])
+}
+
+model ServiceArea {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -1,0 +1,310 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   ShebaGhor — Global Styles
+======================================== */
+
+:root {
+  color-scheme: light;
+  --sheba-green-950: #064e3b;
+  --sheba-green-900: #065f46;
+  --sheba-green-800: #047857;
+  --sheba-green-700: #047857;
+  --sheba-green-600: #059669;
+  --sheba-mint: #a7f3d0;
+  --sheba-background: #f8faf9;
+  --sheba-text: #17352b;
+  --sheba-muted: #64748b;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--sheba-background);
+  color: var(--sheba-text);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body,
+button,
+input,
+textarea,
+select {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+::selection {
+  background-color: #a7f3d0;
+  color: #064e3b;
+}
+
+/* ========================================
+   Form Elements
+======================================== */
+
+input,
+textarea,
+select {
+  color: #17352b;
+  background-color: #ffffff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #6ee7b7;
+  outline-offset: 2px;
+}
+
+input:disabled,
+textarea:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+/* ========================================
+   Area Search Input
+======================================== */
+
+.area-search-input {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 56px;
+  padding: 0 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  background-color: #ffffff;
+  color: #17352b;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: normal;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.area-search-input::placeholder {
+  color: #64748b;
+  opacity: 1;
+}
+
+.area-search-input:focus {
+  border-color: #34d399;
+  outline: 2px solid #6ee7b7;
+  outline-offset: 1px;
+  box-shadow: 0 4px 14px rgb(5 150 105 / 10%);
+}
+
+/* ========================================
+   Navbar Hover Animation
+   Add className="nav-link" to navbar links
+======================================== */
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  color: var(--sheba-text);
+  transition: color 250ms ease, transform 250ms ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -7px;
+  width: 100%;
+  height: 3px;
+  border-radius: 10px;
+  background-color: var(--sheba-green-600);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 300ms ease;
+}
+
+.nav-link:hover {
+  color: var(--sheba-green-600);
+  transform: translateY(-2px);
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* ========================================
+   Navbar Booking Button Animation
+   Add className="nav-booking-btn"
+======================================== */
+
+.nav-booking-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    transform 250ms ease,
+    box-shadow 250ms ease,
+    background-color 250ms ease;
+}
+
+.nav-booking-btn:hover {
+  background-color: var(--sheba-green-900);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgb(5 150 105 / 25%);
+}
+
+.nav-booking-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* ========================================
+   Reusable Cards
+======================================== */
+
+.sheba-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgb(15 23 42 / 4%);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.sheba-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgb(15 23 42 / 8%);
+}
+
+/* ========================================
+   Reusable Buttons
+======================================== */
+
+.sheba-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border: 0;
+  border-radius: 12px;
+  background-color: var(--sheba-green-800);
+  color: #ffffff;
+  font-weight: 700;
+  text-align: center;
+  transition:
+    background-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.sheba-button:hover {
+  background-color: var(--sheba-green-950);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgb(6 78 59 / 18%);
+}
+
+.sheba-button:active {
+  transform: translateY(0);
+}
+
+.sheba-button:focus-visible,
+.nav-booking-btn:focus-visible {
+  outline: 3px solid #6ee7b7;
+  outline-offset: 3px;
+}
+
+/* ========================================
+   Accessibility
+======================================== */
+
+a:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 3px;
+}
+
+/* ========================================
+   Responsive Layout
+======================================== */
+
+@media (max-width: 640px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+
+  body {
+    overflow-wrap: break-word;
+  }
+
+  input,
+  textarea,
+  select {
+    max-width: 100%;
+  }
+
+  .sheba-button {
+    width: 100%;
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
