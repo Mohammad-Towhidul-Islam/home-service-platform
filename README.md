@@ -12,10 +12,12 @@
 
 ShebaGhor is a full-stack home service booking web application designed to make everyday household services easier, more accessible, and convenient for people in Chattogram, Bangladesh. Customers can explore essential home services, submit online booking requests, manage their accounts, and view their booking information — all in one place.
 
-🌐 Live Demo: ShebaGhor 📦 Repository: Mohammad-Towhidul-Islam/home-service-platform
-
-
-
+<p align="center">
+  🌐 <strong>Live Website:</strong>
+  <a href="https://shebagor29.vercel.app">
+    shebagor29.vercel.app
+  </a>
+</p>
 🌐 Project Overview
 
 ShebaGhor একটি আধুনিক অনলাইন হোম সার্ভিস বুকিং প্ল্যাটফর্ম, যা মানুষের দৈনন্দিন গৃহস্থালি প্রয়োজনীয় সেবা পাওয়ার প্রক্রিয়াকে সহজ করার লক্ষ্যে তৈরি করা হয়েছে।
