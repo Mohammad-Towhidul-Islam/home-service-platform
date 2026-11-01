@@ -2,7 +2,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
 
 const MIN_BOOKING_MINUTES = 30;
 
@@ -39,6 +38,8 @@ export default function BookingPage() {
   const [messageType, setMessageType] = useState('success');
   const [loading, setLoading] = useState(false);
   const [minBookingTime, setMinBookingTime] = useState('');
+  const [confirmedBooking, setConfirmedBooking] = useState(null);
+  const [copiedReference, setCopiedReference] = useState(false);
 
   useEffect(() => {
     setMinBookingTime(getLocalDateTimeMin());
@@ -191,10 +192,9 @@ export default function BookingPage() {
         );
       }
 
-      setMessage(
-        `বুকিং অনুরোধ গ্রহণ করা হয়েছে। রেফারেন্স: ${data.booking.reference}`
-      );
-      setMessageType('success');
+      // Show a dedicated confirmation screen and keep the reference visible.
+      // The customer returns home using the button; no unexpected auto-redirect.
+      setConfirmedBooking(data.booking);
     } catch (error) {
       setMessage(
         error.message || 'বুকিং পাঠাতে সমস্যা হয়েছে।'
@@ -205,12 +205,113 @@ export default function BookingPage() {
     }
   }
 
+  if (confirmedBooking) {
+    const reference = confirmedBooking.reference || '—';
+
+    async function copyReference() {
+      try {
+        await navigator.clipboard.writeText(reference);
+        setCopiedReference(true);
+      } catch {
+        setCopiedReference(false);
+      }
+    }
+
+    return (
+      <main className="min-h-screen bg-slate-50 px-4 py-10">
+        <div className="mx-auto flex min-h-[75vh] max-w-2xl items-center">
+          <section
+            className="w-full rounded-3xl bg-white p-6 text-center shadow-soft sm:p-10"
+            aria-labelledby="booking-confirmation-title"
+          >
+            <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+              <svg
+                viewBox="0 0 24 24"
+                className="h-10 w-10"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m5 12 4 4L19 6" />
+              </svg>
+            </div>
+
+            <p className="mt-6 text-sm font-bold uppercase tracking-wider text-emerald-700">
+              বুকিং অনুরোধ গ্রহণ করা হয়েছে
+            </p>
+            <h1
+              id="booking-confirmation-title"
+              className="mt-2 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl"
+            >
+              ধন্যবাদ, {form.customerName}!
+            </h1>
+            <p className="mx-auto mt-3 max-w-lg leading-7 text-slate-600">
+              আপনার সার্ভিস বুকিংয়ের অনুরোধটি আমরা পেয়েছি। আমাদের টিম
+              আপনার দেওয়া মোবাইল নম্বরে যোগাযোগ করে বুকিংয়ের বিষয়টি নিশ্চিত করবে।
+            </p>
+
+            <div className="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/70 p-5 text-left">
+              <p className="text-sm font-semibold text-slate-600">
+                আপনার বুকিং রেফারেন্স নম্বর
+              </p>
+              <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <p className="break-all text-xl font-extrabold tracking-wide text-slate-900">
+                  {reference}
+                </p>
+                <button
+                  type="button"
+                  onClick={copyReference}
+                  className="shrink-0 rounded-lg border border-emerald-200 bg-white px-4 py-2 text-sm font-bold text-emerald-800 transition hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                >
+                  {copiedReference ? 'কপি হয়েছে' : 'রেফারেন্স কপি করুন'}
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-slate-200 p-5 text-left">
+              <h2 className="font-bold text-slate-900">এরপর কী হবে?</h2>
+              <ol className="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+                <li className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-700">1</span>
+                  আমাদের টিম আপনার অনুরোধ পর্যালোচনা করবে।
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-700">2</span>
+                  বুকিংয়ের সময় ও প্রয়োজনীয় তথ্য নিশ্চিত করতে আপনার সঙ্গে যোগাযোগ করা হবে।
+                </li>
+                <li className="flex gap-3">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-xs font-bold text-slate-700">3</span>
+                  বুকিং নিশ্চিত হলে আপনাকে পরবর্তী নির্দেশনা জানানো হবে।
+                </li>
+              </ol>
+            </div>
+
+            <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+              <a
+                href="/"
+                className="inline-flex items-center justify-center rounded-xl bg-brand-600 px-6 py-3.5 font-bold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+              >
+                হোমপেজে ফিরে যান
+              </a>
+            </div>
+            <p className="mt-4 text-xs text-slate-500">
+              প্রয়োজনে আমাদের সঙ্গে যোগাযোগের সময় রেফারেন্স নম্বরটি ব্যবহার করুন।
+            </p>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10">
       <div className="mx-auto max-w-3xl">
-        <Link href="/" className="font-bold text-brand-700">
+        <a href="/" className="font-bold text-brand-700">
           ← হোমপেজ
-        </Link>
+        </a>
 
         <div className="mt-5 rounded-3xl bg-white p-6 shadow-soft md:p-10">
           <p className="font-bold text-brand-600">
@@ -363,19 +464,31 @@ export default function BookingPage() {
             </label>
 
             <div className="md:col-span-2">
-              <button
-                type="submit"
-                disabled={
-                  loading ||
-                  servicesLoading ||
-                  !services.length
-                }
-                className="w-full rounded-xl bg-brand-600 px-5 py-4 font-extrabold text-white hover:bg-brand-700 disabled:opacity-50"
-              >
-                {loading
-                  ? 'পাঠানো হচ্ছে...'
-                  : 'বুকিং অনুরোধ পাঠান'}
-              </button>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <a
+                  href="/"
+                  aria-disabled={loading}
+                  className={`rounded-xl border border-slate-300 px-5 py-4 text-center font-bold text-slate-700 transition hover:bg-slate-50 ${
+                    loading ? 'pointer-events-none opacity-50' : ''
+                  }`}
+                >
+                  বাতিল করুন
+                </a>
+
+                <button
+                  type="submit"
+                  disabled={
+                    loading ||
+                    servicesLoading ||
+                    !services.length
+                  }
+                  className="w-full rounded-xl bg-brand-600 px-5 py-4 font-extrabold text-white hover:bg-brand-700 disabled:opacity-50"
+                >
+                  {loading
+                    ? 'পাঠানো হচ্ছে...'
+                    : 'বুকিং অনুরোধ পাঠান'}
+                </button>
+              </div>
 
               <p className="mt-3 text-xs leading-5 text-slate-500">
                 চূড়ান্ত মূল্য কাজের ধরন ও পরিদর্শনের ওপর নির্ভর করতে পারে।
