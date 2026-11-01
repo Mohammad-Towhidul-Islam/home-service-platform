@@ -1,6 +1,14 @@
-🏠 ShebaGhor — Home Service Booking Platform
+<h1 align="center">
+  🏠 ShebaGhor
+</h1>
 
-আপনার ঘরের প্রয়োজনীয় সেবার সহজ সমাধান, এক প্ল্যাটফর্মে।
+<h3 align="center">
+  Home Service Booking Platform
+</h3>
+
+<p align="center">
+  আপনার ঘরের প্রয়োজনীয় সেবার সহজ সমাধান, এক প্ল্যাটফর্মে।
+</p>
 
 ShebaGhor is a full-stack home service booking web application designed to make everyday household services easier, more accessible, and convenient for people in Chattogram, Bangladesh. Customers can explore essential home services, submit online booking requests, manage their accounts, and view their booking information — all in one place.
 
