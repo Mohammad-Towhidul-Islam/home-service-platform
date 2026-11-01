@@ -8,62 +8,211 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id                String              @id @default(cuid())
+  name              String
+  email             String?             @unique
+  phone             String              @unique
+  passwordHash      String
+  role              Role                @default(CUSTOMER)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  Address           Address[]
+  Booking           Booking[]
+  BookingAssignment BookingAssignment[]
+}
+
+model ServiceCategory {
+  id          String    @id @default(cuid())
+  nameEn      String    @unique
+  nameBn      String
+  description String?
+  icon        String?
+  active      Boolean   @default(true)
+  sortOrder   Int       @default(0)
+  services    Service[]
+}
+
+model Service {
+  id                 String          @id @default(cuid())
+  categoryId         String
+  nameEn             String
+  nameBn             String
+  description        String
+  pricePaisa         Int?
+  pricingType        PricingType     @default(ESTIMATE)
+  durationMinutes    Int             @default(60)
+  inspectionFeePaisa Int?
+  active             Boolean         @default(true)
+  createdAt          DateTime        @default(now())
+  Booking            Booking[]
+  category           ServiceCategory @relation(fields: [categoryId], references: [id])
+
+  @@index([categoryId, active])
+}
+
+model ServiceArea {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  active Boolean @default(true)
+}
+
+model Address {
+  id         String    @id
+  userId     String
+  label      String?
+  area       String
+  street     String
+  building   String?
+  directions String?
+  createdAt  DateTime  @default(now())
+  User       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Booking    Booking[]
+
+  @@index([userId])
+}
+
+model AuditLog {
+  id         String   @id
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([entityType, entityId, createdAt])
+}
+
+model Booking {
+  id                   String                 @id
+  reference            String                 @unique
+  customerId           String
+  serviceId            String
+  addressId            String?
+  customerName         String
+  customerPhone        String
+  area                 String
+  addressText          String
+  problemDescription   String
+  scheduledAt          DateTime
+  status               BookingStatus          @default(PENDING)
+  estimatedPricePaisa  Int?
+  finalPricePaisa      Int?
+  paymentStatus        PaymentStatus          @default(UNPAID)
+  paymentMethod        String                 @default("CASH_ON_SERVICE")
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime
+  Address              Address?               @relation(fields: [addressId], references: [id])
+  User                 User                   @relation(fields: [customerId], references: [id])
+  Service              Service                @relation(fields: [serviceId], references: [id])
+  BookingAssignment    BookingAssignment[]
+  BookingStatusHistory BookingStatusHistory[]
+  Invoice              Invoice?
+
+  @@index([customerId, createdAt])
+  @@index([status, scheduledAt])
+}
+
+model BookingAssignment {
+  id         String   @id
+  bookingId  String
+  staffId    String
+  assignedAt DateTime @default(now())
+  Booking    Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  User       User     @relation(fields: [staffId], references: [id])
+
+  @@unique([bookingId, staffId])
+  @@index([staffId, assignedAt])
+}
+
+model BookingStatusHistory {
+  id         String         @id
+  bookingId  String
+  fromStatus BookingStatus?
+  toStatus   BookingStatus
+  note       String?
+  changedBy  String?
+  createdAt  DateTime       @default(now())
+  Booking    Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([bookingId, createdAt])
+}
+
+model Invoice {
+  id            String        @id
+  bookingId     String        @unique
+  subtotalPaisa Int
+  discountPaisa Int           @default(0)
+  totalPaisa    Int
+  issuedAt      DateTime      @default(now())
+  Booking       Booking       @relation(fields: [bookingId], references: [id])
+  InvoiceItem   InvoiceItem[]
+}
+
+model InvoiceItem {
+  id             String  @id
+  invoiceId      String
+  description    String
+  quantity       Int     @default(1)
+  unitPricePaisa Int
+  totalPaisa     Int
+  Invoice        Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+model Review {
+  id         String   @id
+  bookingId  String   @unique
+  customerId String
+  rating     Int
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  @@index([customerId])
+}
+
+model SupportTicket {
+  id         String   @id @default(cuid())
+  customerId String
+  subject    String
+  message    String
+  status     String   @default("OPEN")
+  createdAt  DateTime @default(now())
+
+  @@index([customerId, status])
+}
+
 enum Role {
   CUSTOMER
-  STAFF
+  TECHNICIAN
+  MANAGER
   ADMIN
 }
 
 enum PricingType {
+  FIXED
   STARTING
-  ESTIMATE
   INSPECTION
+  ESTIMATE
 }
 
-model User {
-  id           String   @id @default(cuid())
-  name         String
-  phone        String   @unique
-  email        String?  @unique
-  passwordHash String
-  role         Role     @default(CUSTOMER)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  ASSIGNED
+  ON_THE_WAY
+  ARRIVED
+  IN_PROGRESS
+  AWAITING_APPROVAL
+  COMPLETED
+  CANCELLATION_REQUESTED
+  CANCELLED
+  RESCHEDULE_REQUESTED
+  RESCHEDULED
 }
 
-model ServiceCategory {
-  id        String    @id @default(cuid())
-  nameEn    String    @unique
-  nameBn    String
-  icon      String    @default("🛠️")
-  sortOrder Int       @default(0)
-  active    Boolean   @default(true)
-  services  Service[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-model Service {
-  id              String          @id @default(cuid())
-  categoryId      String
-  category        ServiceCategory @relation(fields: [categoryId], references: [id])
-  nameEn          String
-  nameBn          String
-  description     String
-  pricePaisa      Int
-  pricingType     PricingType
-  durationMinutes Int
-  active          Boolean         @default(true)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-
-  @@index([categoryId])
-}
-
-model ServiceArea {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  active    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
 }
