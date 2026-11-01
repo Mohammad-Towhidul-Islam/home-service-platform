@@ -1,85 +1,92 @@
-# ShebaGhor — Home Service Booking Platform
+আপনার ঘরের প্রয়োজনীয় সেবা এখন এক জায়গায়, সহজে এবং সুবিধামতো!
 
-JavaScript full-stack starter for a company-operated home service business in Chattogram, Bangladesh.
+🌐 Live Website: https://shebagor29.vercel.app
 
-## Stack
-- Next.js App Router + React (JavaScript/JSX; no TypeScript required)
-- Tailwind CSS
-- PostgreSQL + Prisma ORM
-- Zod request validation, bcrypt password hashing, signed HttpOnly session cookie
-- BDT pricing stored as integer paisa; Asia/Dhaka display for booking times
+ShebaGhor একটি আধুনিক Full-Stack Home Service Booking Platform, যা চট্টগ্রাম, বাংলাদেশকে কেন্দ্র করে তৈরি করা হয়েছে। আমাদের মূল লক্ষ্য হলো মানুষের দৈনন্দিন গৃহস্থালি ও মেরামতসংক্রান্ত প্রয়োজনীয় সেবা পাওয়ার প্রক্রিয়াকে আরও সহজ, দ্রুত এবং ঝামেলামুক্ত করা।
 
-## Features included
-- Bangla-first responsive homepage and service catalog
-- Booking request form and PostgreSQL persistence
-- Customer registration/login and own-bookings page
-- Admin/manager booking list and status update API/dashboard
-- Technician job list and assigned-job status update API
-- Service catalog and staff management APIs (authorized)
-- Audit log and booking status history
-- Seeded service catalog and configurable example service areas
+এখন আর প্রয়োজনীয় হোম সার্ভিস খুঁজতে বিভিন্ন জায়গায় ঘুরতে হবে না। ShebaGhor-এর মাধ্যমে গ্রাহকরা অনলাইনে প্রয়োজনীয় সার্ভিস দেখতে, বুকিংয়ের অনুরোধ পাঠাতে এবং WhatsApp-এর মাধ্যমেও যোগাযোগ করে সার্ভিস সম্পর্কে জানতে পারবেন।
+আমাদের দৈনন্দিন জীবনে বিভিন্ন সময় বাসার নানা ধরনের সমস্যার সম্মুখীন হতে হয়। যেমন:
+- এসি ঠিকমতো কাজ করছে না।
+- বাসার বৈদ্যুতিক লাইনে সমস্যা।
+- পানির পাইপ বা কল লিক করছে।
+- বাসা পরিষ্কার করার প্রয়োজন।
+- ফ্রিজ নষ্ট হয়ে গেছে।
+- দরজা, আসবাবপত্র বা কাঠের কাজ করানো প্রয়োজন।
+কিন্তু অনেক সময় এসব কাজের জন্য নির্ভরযোগ্য সার্ভিস খুঁজে পাওয়া, যোগাযোগ করা এবং সময় নির্ধারণ করা কঠিন হয়ে যায়।
 
-## Requirements
-- Node.js 20+
-- PostgreSQL 14+
+এই সমস্যাগুলো সমাধানের লক্ষ্যেই তৈরি করেছি ShebaGhor — এমন একটি ডিজিটাল প্ল্যাটফর্ম, যেখানে প্রয়োজনীয় হোম সার্ভিসগুলো এক জায়গায় পাওয়া যাবে।
+গ্রাহকদের দৈনন্দিন প্রয়োজন বিবেচনা করে প্ল্যাটফর্মে বিভিন্ন ধরনের সার্ভিস যুক্ত করা হয়েছে।
+- এসি পরিষ্কার ও সার্ভিসিং।
+- এসির সাধারণ সমস্যা পরীক্ষা।
+- প্রয়োজনীয় মেরামতসংক্রান্ত সেবা।
+- বাসার বৈদ্যুতিক সমস্যা সমাধান।
+- সুইচ ও সকেট মেরামত।
+- প্রয়োজনীয় ইলেকট্রিক্যাল কাজ।
+- পানির পাইপের সমস্যা সমাধান।
+- কল ও বেসিন মেরামত।
+- পানির লিকেজ পরীক্ষা ও মেরামত।
+- বাসা পরিষ্কারের সেবা।
+- প্রয়োজনীয় জায়গা পরিষ্কার।
+- ঘর পরিচ্ছন্ন রাখতে সহায়তা।
+- ফ্রিজের সমস্যা পরীক্ষা।
+- প্রয়োজনীয় মেরামত।
+- ফ্রিজের কার্যকারিতা-সংক্রান্ত সমস্যা সমাধান।
+- দরজা ও কাঠের কাজ।
+- আসবাবপত্র মেরামত।
+- প্রয়োজনীয় কার্পেন্টার সেবা।
+সার্ভিসের প্রাপ্যতা, মূল্য এবং সময়সূচি নির্ধারিত এলাকা ও কাজের ধরন অনুযায়ী পরিবর্তিত হতে পারে।
+- সহজ ও ব্যবহারবান্ধব বাংলা-ভিত্তিক ওয়েবসাইট।
+- বিভিন্ন সার্ভিস এক জায়গায় দেখার সুবিধা।
+- অনলাইনে বুকিং রিকোয়েস্ট পাঠানোর ব্যবস্থা।
+- নিজের নাম, ফোন নম্বর ও ঠিকানা দেওয়ার সুবিধা।
+- সমস্যার বিস্তারিত বিবরণ দেওয়ার সুযোগ।
+- পছন্দের তারিখ ও সময় নির্বাচন।
+- Customer Registration ও Login System।
+- My Bookings পেজে নিজের বুকিং দেখার সুবিধা।
+যেসব গ্রাহক সরাসরি কথা বলে সার্ভিস নিতে স্বাচ্ছন্দ্যবোধ করেন, তাদের জন্য WhatsApp-ভিত্তিক যোগাযোগের সুবিধাও রাখা যেতে পারে।
 
-## Local setup
-1. Create a PostgreSQL database, e.g. `shebaghor`.
-2. Copy `.env.example` to `.env` and set `DATABASE_URL` and a random `AUTH_SECRET` (32+ characters).
-3. Install and prepare the database:
+WhatsApp-এর মাধ্যমে গ্রাহকরা:
+- সার্ভিস সম্পর্কে জানতে পারবেন।
+- নিজেদের সমস্যার বিবরণ জানাতে পারবেন।
+- বুকিংয়ের বিষয়ে যোগাযোগ করতে পারবেন।
+- সার্ভিসের সময় ও অন্যান্য তথ্য নিয়ে আলোচনা করতে পারবেন।
+- Admin/Manager Dashboard।
+- গ্রাহকদের বুকিং তালিকা দেখা।
+- বুকিংয়ের Status আপডেট করার ব্যবস্থা।
+- Service Management API।
+- Staff Management API।
+- Booking Status History।
+- Audit Log-এর মাধ্যমে গুরুত্বপূর্ণ কার্যক্রম সংরক্ষণ।
+- Technician-এর জন্য আলাদা Dashboard।
+- Assigned Jobs দেখার ব্যবস্থা।
+- কাজের Status আপডেট করার API।
+- কাজের অগ্রগতি পরিচালনার সুবিধা।
+এই প্রজেক্টটি আধুনিক Full-Stack Web Development Technology ব্যবহার করে তৈরি করেছি।
+এই প্রজেক্টে আমি পরিকল্পনা, ডিজাইন, ডেভেলপমেন্ট, ডাটাবেজ ইন্টিগ্রেশন এবং ডেপ্লয়মেন্টসহ বিভিন্ন ধাপে কাজ করেছি।
+1. Bangla-first Responsive Homepage তৈরি।
+2. Service Catalog ও Service Listing তৈরি।
+3. Customer Booking Form তৈরি।
+4. PostgreSQL Database Integration।
+5. Prisma ORM দিয়ে Database Management।
+6. Customer Registration ও Login System।
+7. Customer-এর নিজস্ব Booking দেখার ব্যবস্থা।
+8. Admin ও Technician Dashboard এবং Management API।
+9. Booking Status ও Audit History Management।
+10. Zod দিয়ে Input Validation।
+11. bcrypt দিয়ে Password Hashing।
+12. Neon Cloud Database Setup।
+13. GitHub-এর মাধ্যমে Version Control।
+14. Vercel-এ Live Deployment।
+ShebaGhor-এর লক্ষ্য হলো মানুষের দৈনন্দিন হোম সার্ভিসের প্রয়োজনকে একটি সহজ ডিজিটাল প্ল্যাটফর্মের মাধ্যমে পূরণ করতে সহায়তা করা।
 
-```bash
-npm install
-npx prisma generate
-npx prisma migrate dev --name init
-npm run db:seed
-npm run dev
-```
+আমরা চাই, একজন গ্রাহক যেন নিজের বাসার প্রয়োজনীয় সার্ভিস খুঁজে পান, সহজে বুকিংয়ের অনুরোধ পাঠাতে পারেন এবং প্রয়োজন হলে সরাসরি যোগাযোগ করতে পারেন।
 
-Open http://localhost:3000.
+ভবিষ্যতে আরও নতুন সার্ভিস, উন্নত বুকিং ব্যবস্থা, অনলাইন পেমেন্ট এবং গ্রাহকসেবার সুবিধা যুক্ত করার পরিকল্পনা রয়েছে।
+আপনার বাসার প্রয়োজনীয় সার্ভিস সম্পর্কে জানতে এবং বুকিংয়ের অনুরোধ পাঠাতে আমাদের ওয়েবসাইট ভিজিট করুন।
 
-## Important setup notes
-- Registering through the website creates a `CUSTOMER` account only. It does not grant admin access.
-- Create an admin securely using a one-off local script or database administration after migration; never expose public admin registration. Example local bootstrap (run once and remove the script afterwards):
+🔗 Live Website: https://shebagor29.vercel.app
 
-```js
-const { PrismaClient } = require('@prisma/client');
-const bcrypt = require('bcryptjs');
-const prisma = new PrismaClient();
-(async () => {
-  const passwordHash = await bcrypt.hash('CHANGE_THIS_LONG_PASSWORD', 12);
-  await prisma.user.upsert({ where: { phone: '01800000000' }, update: {}, create: { name: 'Company Admin', phone: '01800000000', passwordHash, role: 'ADMIN' } });
-  await prisma.$disconnect();
-})();
-```
-Save that snippet as a temporary `.cjs` file, run `node filename.cjs`, then delete it. Use a unique password and valid phone format.
-- Anonymous bookings are associated with a phone-based customer record. To see bookings, sign in with an account whose user ID owns those bookings; the MVP does not automatically merge guest bookings into a later registered account.
-- `GET /api/services` returns demo fallback cards if the database is unavailable, but booking creation requires PostgreSQL and a seeded active service.
-- `npm run db:seed` inserts initial service categories, services, and service areas. Edit prices in the database/admin workflow for your business; sample prices are placeholders.
-- This is an MVP foundation, not a production certification. Before launch, add automated tests, email/SMS verification, password reset, CSRF/origin protections as needed, upload scanning, rate limiting, formal booking transition rules, online payment gateway verification, backups, monitoring, and a security review.
+ShebaGhor — আপনার ঘরের সেবায়, আপনার পাশে।
+Developed as a Full-Stack Web Application Project | Chattogram, Bangladesh
 
-## Main routes
-- `/` public home page
-- `/booking` booking form
-- `/register`, `/login`
-- `/my-bookings` customer booking list
-- `/admin` operations dashboard (requires ADMIN/MANAGER)
-- `/staff` technician dashboard (requires TECHNICIAN)
-
-## API overview
-- `GET /api/services`
-- `POST /api/bookings`
-- `GET /api/bookings/mine`
-- `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`
-- `GET/PATCH /api/admin/bookings`
-- `GET/POST /api/admin/services`
-- `GET/POST /api/admin/staff`
-- `GET/PATCH /api/staff/jobs`
-
-## Build
-```bash
-npm run build
-npm start
-```
-
-Do not deploy until the environment, migration, authorization, operational policies, and tests have been reviewed.
+#ShebaGhor #HomeService #HomeServiceBooking #FullStackDevelopment #NextJS #ReactJS #PostgreSQL #Prisma #Bangladesh #WebDevelopment
